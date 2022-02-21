@@ -193,7 +193,53 @@ module.exports = async (client, int) => {
                 if (messages.length < 1) messages = 'There are no messages in this ticket... strange';
 
                 const ticketID = Date.now();
+                
+                ////////////////////////////////////////////////////////
+                
+                
+                const reason = int.values[0].split('_')[1];
 
+                
+                
+                
+            const savechannel = int.guild.channels.cache.find(x => x.name === `Тикеты`);
+
+            if (!savechannel) {
+                await int.guild.channels.create(`Тикеты`, {
+                    type: 'GUILD_TEXT',
+                    topic: `Просмотр тикетов`,
+                    permissionOverwrites: [
+                        {
+                            id: int.guild.id,
+                            deny: ['VIEW_CHANNEL', 'SEND_MESSAGES']
+                        },
+                        
+                        {
+                            id: int.member.id,
+                            allow: ['VIEW_CHANNEL', 'SEND_MESSAGES']
+                        },
+                        /*
+                        {
+                            id: client.user.id,
+                            allow: ['VIEW_CHANNEL', 'SEND_MESSAGES']
+                        }
+                        */
+                    ]
+                });
+
+                const savechannel = int.guild.channels.cache.find(x => x.name === `Тикеты`);
+                
+                
+                await savechannel.send(`${messages}\n\nLogs ${new Date(ticketID).toLocaleString()}`);
+                
+                
+                
+                
+                
+                
+                
+                ///////////////////////////////////////////
+               /*
                 const stream = await createWriteStream(`./data/${ticketID}.txt`);
 
                 stream.once('open', () => {
@@ -204,6 +250,8 @@ module.exports = async (client, int) => {
                 });
 
                 stream.on('finish', () => int.reply({ files: [`./data/${ticketID}.txt`] }));
+             */   
+                
             });
         }
     }
